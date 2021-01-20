@@ -1,0 +1,100 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Game/SPRITES/Characters/Playable Characters/Denki/output-onlinegiftools.png" type="Texture" id=1]
+[ext_resource path="res://Game/Overworld/flying whales.gltf" type="PackedScene" id=2]
+[ext_resource path="res://Game/RigidBody.gd" type="Script" id=3]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.585418
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 6, 1, 8 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 2.15395, 7.51552, 2.79968 )
+
+[sub_resource type="ProceduralSky" id=4]
+
+[sub_resource type="Environment" id=5]
+background_mode = 2
+background_sky = SubResource( 4 )
+ambient_light_color = Color( 0.486275, 0.270588, 0.270588, 1 )
+ss_reflections_enabled = true
+ss_reflections_roughness = false
+dof_blur_far_enabled = true
+dof_blur_far_distance = 21.13
+dof_blur_far_quality = 2
+dof_blur_near_enabled = true
+dof_blur_near_distance = 7.69
+dof_blur_near_quality = 2
+glow_enabled = true
+glow_blend_mode = 0
+glow_hdr_threshold = 0.8
+
+[node name="World" type="Spatial"]
+
+[node name="Player" type="Node" parent="."]
+
+[node name="Denki" type="Spatial" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.246107, -9.26011, 1.7232 )
+
+[node name="RigidBody" type="RigidBody" parent="Player/Denki"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource( 3 )
+speed = 6
+
+[node name="Sprite3D" type="Sprite3D" parent="Player/Denki/RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.334179, 2.59502, 0.00303555 )
+modulate = Color( 1, 0.905882, 0.780392, 1 )
+billboard = 2
+double_sided = false
+alpha_cut = 2
+texture = ExtResource( 1 )
+hframes = 13
+
+[node name="CollisionShape" type="CollisionShape" parent="Player/Denki/RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.318579, 2.10513, 0.0279706 )
+shape = SubResource( 1 )
+
+[node name="CamerRotator" type="Spatial" parent="Player/Denki/RigidBody"]
+
+[node name="Camera" type="Camera" parent="Player/Denki/RigidBody/CamerRotator"]
+transform = Transform( 1, 0, 0, 0, 0.932286, 0.361722, 0, -0.361722, 0.932286, 0.000765502, 5.4528, 9.1632 )
+cull_mask = 2148532223
+current = true
+near = 0.01
+
+[node name="Lina" type="Spatial" parent="Player"]
+
+[node name="Zirbon" type="Spatial" parent="Player"]
+
+[node name="Overworld" type="Spatial" parent="."]
+
+[node name="Ship" type="Spatial" parent="Overworld"]
+
+[node name="flying whales" parent="Overworld/Ship" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47586, -0.0824208, -0.0172725 )
+
+[node name="Colision" type="StaticBody" parent="Overworld/Ship"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Overworld/Ship/Colision"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -8.8, 7 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Overworld/Ship/Colision"]
+transform = Transform( 1, 0, 0, 0, 0.999833, -0.0182725, 0, 0.0182725, 0.999833, 0.576348, -2.29181, 7.94572 )
+shape = SubResource( 3 )
+
+[node name="OmniLight" type="OmniLight" parent="Overworld/Ship"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.439553, -3.1734, 6.7511 )
+light_color = Color( 0.619608, 0.972549, 1, 1 )
+light_energy = 0.84
+light_indirect_energy = 4.98
+light_specular = 1.0
+omni_range = 136.8
+omni_attenuation = 0.594605
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Overworld"]
+environment = SubResource( 5 )
